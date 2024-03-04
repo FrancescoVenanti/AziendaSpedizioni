@@ -20,7 +20,8 @@ namespace AziendaSpedizioni.Models
         [DisplayName("Data di pubblicazione")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Remote("checkDataSpedizione", "Home", ErrorMessage = "la data deve essere uguale o superiore a quella odierna")]
+        //[Remote("checkDataSpedizione", "Home", ErrorMessage = "la data deve essere uguale o superiore a quella odierna")]
+        [ValidateCurrentDate(ErrorMessage = "La data deve essere maggiore della data odierna.")]
         public DateTime dataSpedizione { get; set; }
         [DisplayName("Inserisci il peso della spedizione")]
         [Required(ErrorMessage = "Il codice è obbligatorio")]
@@ -44,7 +45,8 @@ namespace AziendaSpedizioni.Models
         [DisplayName("Data di pubblicazione")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Remote("checkDataConsegna", "Home", ErrorMessage = "la data deve essere uguale o superiore a quella odierna")]
+        //[Remote("checkDataConsegna", "Home", ErrorMessage = "la data deve essere uguale o superiore a quella odierna")]
+        [ValidateCurrentDate(ErrorMessage = "La data deve essere maggiore della data odierna.")]
         public DateTime dataConsegna { get; set; }
     }
 }

@@ -74,13 +74,11 @@ namespace AziendaSpedizioni.Controllers
 
         public ActionResult InserisciSpedizione()
         {
-
             return View();
         }
         [HttpPost]
         public ActionResult InserisciSpedizione(Spedizioni s)
         {
-            
             return View();
         }
     }
