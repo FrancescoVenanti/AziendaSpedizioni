@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace AziendaSpedizioni.Controllers
 {
@@ -41,8 +42,7 @@ namespace AziendaSpedizioni.Controllers
                     SqlDataReader dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
-                        Session["Username"] = u.Username;
-                        Session["Role"] = dr["Role"].ToString();
+                        FormsAuthentication.SetAuthCookie(u.Username, false);
                         return RedirectToAction("Index");
                     }
                     else
@@ -57,6 +57,11 @@ namespace AziendaSpedizioni.Controllers
                     return View();
                 }
                 
+        }
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index");
         }
 
         public ActionResult CheckCodFiscale(string CodFisc)
@@ -115,14 +120,6 @@ namespace AziendaSpedizioni.Controllers
             }
         }
 
-        public ActionResult InserisciSpedizione()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult InserisciSpedizione(Spedizioni s)
-        {
-            return View();
-        }
+        
     }
 }
