@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Models\Clienti.cs" />
     <Compile Include="Models\Spedizioni.cs" />
+    <Compile Include="Models\Utenti.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidateCurrentDate.cs" />
   </ItemGroup>
@@ -181,6 +182,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\InserisciSpedizione.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

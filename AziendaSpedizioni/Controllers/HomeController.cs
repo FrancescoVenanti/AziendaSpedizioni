@@ -1,6 +1,8 @@
 ﻿using AziendaSpedizioni.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -9,11 +11,52 @@ using System.Web.Mvc;
 
 namespace AziendaSpedizioni.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Login(Utenti u)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionStringDb"].ConnectionString.ToString();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT * FROM Utenti WHERE Username = @Username AND Password = @Password";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Username", u.Username);
+                    cmd.Parameters.AddWithValue("@Password", u.Password);
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        Session["Username"] = u.Username;
+                        Session["Role"] = dr["Role"].ToString();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Username o password errati";
+                        return View();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View();
+                }
+                
         }
 
         public ActionResult CheckCodFiscale(string CodFisc)
